@@ -1,0 +1,19 @@
+﻿@model InfoBFP
+@using System
+
+<table class="table">
+    <tr>
+        <th>BFP</th>
+        <th>Fat Mass</th>
+        <th>Lean Mass</th>
+        <th>Mass Description</th>
+        <th>Gender</th>
+    </tr>
+    <tr>
+        <th>@Math.Round(@Model.bfp, 2)</th>
+        <th>@Math.Round(@Model.fat_mass, 2)</th>
+        <th>@Math.Round(@Model.lean_mass, 2)</th>
+        <th>@Model.description</th>
+        <th>@Model.gender</th>
+    </tr>
+</table>

@@ -6,10 +6,34 @@
     ViewData["Title"] = "Fitness Calculator";
 }
 
+<style>
+    .col-md-10 {
+        text-align: center;
+        width: 20%;
+        margin: auto;
+        /*        display: flex;
+            display: grid;
+            justify-content: center;*/
+    }
+
+    .col-md-2 {
+        text-align: center;
+        margin: auto;
+        border: solid 10px white;
+        width: 20%;
+        /*        display: flex;
+            display: grid;
+            justify-content: center;*/
+    }
+    .form-group{
+
+    }
+</style>
+
 <div class="text-center">
     <h1 class="display-4">Welcome to the Fitness Calculator</h1>
     <p>Fill in the boxes in below and click the "submit" button!</p>
-    <p>Your ___, ___, ___ will then show</p>
+    <p>Your ___, ___, ___  will then show</p>
 </div>
 
 @*<form action="/Home/CallBmiAPI" method="post">
@@ -19,26 +43,78 @@
     <input type="submit" value="Submit" />
 </form>*@
 
-<form asp-action="CallBmiAPI" asp-controller="Home" method="post" role="form">
-    <label asp-for="weight" class="col-md-2">Weight</label>
+<div>
+    <form asp-action="CallBmiAPI" asp-controller="Home" method="post" role="form">
+        <div class="col-md-10">
+            <label asp-for="weight" class="col-md-2">Weight</label>
+            <input asp-for="weight" class="form-control" />
+        </div>
+        <div class="col-md-10">
+            <label asp-for="height" class="col-md-2">Height</label>
+            <input asp-for="height" class="form-control" />
+        </div>
+        <div class="form-group">
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success form-control">Calculate BMI</button>
+            </div>
+        </div>
+
+    </form>
+
+
+    <form asp-action="CallBmrAPI" asp-controller="Home" method="post" role="form">
+        <div class="col-md-10">
+            <label asp-for="weight" class="col-md-2">Weight</label>
+            <input asp-for="weight" class="form-control" />
+        </div>
+        <div class="col-md-10">
+            <label asp-for="height" class="col-md-2">Height</label>
+            <input asp-for="height" class="form-control" />
+        </div>
+        <div class="col-md-10">
+            <label asp-for="age" class="col-md-2">Age</label>
+            <input asp-for="age" class="form-control" />
+        </div>
+        <div class="col-md-10">
+            <label asp-for="gender" class="col-md-2">Gender</label>
+            <input asp-for="gender" class="form-control" />
+        </div>
+        <div class="form-group">
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success form-control">Calculate BMR</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+<form asp-action="CallBfpAPI" asp-controller="Home" method="post" role="form">
     <div class="col-md-10">
+        <label asp-for="weight" class="col-md-2">Weight</label>
         <input asp-for="weight" class="form-control" />
     </div>
-    <label asp-for="height" class="col-md-2">Height</label>
     <div class="col-md-10">
+        <label asp-for="height" class="col-md-2">Height</label>
         <input asp-for="height" class="form-control" />
     </div>
-    <label asp-for="age" class="col-md-2">Age</label>
     <div class="col-md-10">
+        <label asp-for="age" class="col-md-2">Age</label>
         <input asp-for="age" class="form-control" />
+    </div>
+    <div class="col-md-10">
+        <label asp-for="gender" class="col-md-2">Gender</label>
+        <input asp-for="gender" class="form-control" />
     </div>
     <div class="form-group">
         <div class="col-md-2">
-            <button type="submit" class="btn btn-success form-control">Submit</button>
+            <button type="submit" class="btn btn-success form-control">Calculate BFP</button>
         </div>
     </div>
 
 </form>
+</div>
+
 
 
 @*<form asp-controller="CallBmiAPI" asp-action="Home" method="post" role="form">

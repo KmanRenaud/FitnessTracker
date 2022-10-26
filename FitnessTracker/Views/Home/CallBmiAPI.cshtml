@@ -1,14 +1,14 @@
 ﻿@model InfoBMI
 
 
-<table class="BMI">
+<table class="table">
     <tr>
         <th>BMI</th>
         <th>Health Class</th>
         <th>Healthy BMI Range</th>
     </tr>
     <tr>
-        <th>@Model.bmi</th>
+        <th>@Math.Round(@Model.bmi, 2)</th>
         <th>@Model.health</th>
         <th>@Model.healthy_bmi_range</th>
     </tr>
