@@ -1,40 +1,11 @@
-﻿
-@model Root
-
+﻿@model Root
 
 @{
     ViewData["Title"] = "Fitness Calculator";
 }
 
-<style>
-    .col-md-10 {
-        text-align: center;
-        width: 20%;
-        margin: auto;
-        /*        display: flex;
-            display: grid;
-            justify-content: center;*/
-    }
 
-    .col-md-2 {
-        text-align: center;
-        margin: auto;
-        border: solid 10px white;
-        width: 20%;
-        /*        display: flex;
-            display: grid;
-            justify-content: center;*/
-    }
-    .form-group{
 
-    }
-</style>
-
-<div class="text-center">
-    <h1 class="display-4">Welcome to the Fitness Calculator</h1>
-    <p>Fill in the boxes in below and click the "submit" button!</p>
-    <p>Your ___, ___, ___  will then show</p>
-</div>
 
 @*<form action="/Home/CallBmiAPI" method="post">
     <input type="text" name="weight" />
@@ -43,93 +14,483 @@
     <input type="submit" value="Submit" />
 </form>*@
 
+
+
+@*<script type="text/javascript">
+    function ValidAlphabet() {
+
+    var code = (event.which) ? event.which : event.keyCode;
+
+    if ((code >= 48 && code <= 57))
+    { return true; }
+    else
+    { return false; }
+}
+</script>
+*@
+
+<style>
+
+    .BMIImage {
+        height: 50px;
+        width: 50px;
+    }
+
+    .BMIImageTxt {
+        text-align: right;
+    }
+
+    .TextboxInfoRight {
+    }
+
+    .parent {
+        border: 0px solid grey;
+        background: lightgrey;
+        -webkit-box-shadow: 0px 0px 26px 8px rgba(0,0,0,0.39);
+        -moz-box-shadow: 0px 0px 26px 8px rgba(0,0,0,0.39);
+        box-shadow: 0px 0px 26px 8px rgba(0,0,0,0.39);
+        border-radius: 10px;
+        margin: 1rem;
+        padding: 2rem 2rem;
+    }
+
+    .Dropdown {
+        display: inline-block;
+        width: 20%;
+        height: 37px;
+        border: black 0px;
+        border-radius: 3px;
+    }
+
+    .child {
+        display: inline-block;
+        width: 100%;
+    }
+
+    #txtField {
+        -webkit-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39);
+        -moz-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39);
+        box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39);
+    }
+
+    #buttonField {
+        box-shadow: 0px 0px 8px 3px rgba(0,0,0,0.39);
+        margin-top: 3rem;
+    }
+
+    .text-center {
+    }
+
+    body {
+        background-color: seashell;
+    }
+
+
+    .new {
+    }
+
+</style>
+
+@*@using (Html.BeginForm("CallBmiAPI", "Home", FormMethod.Post ))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.LabelFor(root => root.height, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.EditorFor(root => root.height, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(root => root.height, "", new { @class = "text-danger" })
+
+
+    @Html.LabelFor(root => root.weight, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.EditorFor(root => root.weight, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(root => root.weight, "", new { @class = "text-danger" })
+
+
+    <input type="submit" value="Create" class="btn btn-danger" />
+
+}
+*@
+
+
+
+    <script>
+        function weightConverter(valNum) {
+            document.getElementById("outputKilograms").innerHTML= (valNum / 2.2046).toFixed(2);
+        }
+        function weightConverterRev(valNum) {
+            document.getElementById("outputKilogramsRev").innerHTML = (valNum * 2.2046).toFixed(2);
+        }
+        function weightInConverter(valNum) {
+            document.getElementById("outputInToCm").innerHTML = (valNum / 2.54).toFixed(2);
+        }
+        function weightInConverterRev(valNum) {
+            document.getElementById("outputCmToInRev").innerHTML = (valNum * 2.54).toFixed(2);
+        }
+    </script>
+
+
 <div>
-    <form asp-action="CallBmiAPI" asp-controller="Home" method="post" role="form">
-        <div class="col-md-10">
-            <label asp-for="weight" class="col-md-2">Weight</label>
-            <input asp-for="weight" class="form-control" />
+
+    <div class="text-center">
+        <h1 class="display-4" style="margin-top: 50px; color: black;"><strong>Welcome to the Fitness Calculator</strong></h1>
+        <h4 style="margin-bottom: 7.5rem; color: black;">Fill in the boxes and click the buttons to calculate your fitness levels!</h4>
+    </div>
+
+
+    <div class="parent" style="margin-bottom: 150px;">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="parent" style="font-size: 20px;">
+                        <h2>Pounds to Kilograms</h2>
+                        <p>Type a value in the Pounds field to convert the value to Kilograms:</p>
+
+                        <p>
+                            <label>Pounds</label>
+                            <input id="inputPounds" type="number" placeholder="Pounds" oninput="weightConverter(this.value)" onchange="weightConverter(this.value)" class="Dropdown" style="box-shadow: 0px 0px 8px 3px rgba(0,0,0,0.39);">
+                        </p>
+                        <p >Kilograms: <span id="outputKilograms" style="font-weight: bold;"></span></p>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="parent" style="font-size: 20px;">
+                        <h2>Kilograms to Pounds</h2>
+                        <p>Type a value in the Kilograms field to convert the value to Pounds:</p>
+
+                        <p>
+                            <label>Kilograms</label>
+                            <input id="inputPounds" type="number" placeholder="Pounds" oninput="weightConverterRev(this.value)" onchange="weightConverterRev(this.value)" class="Dropdown" style="box-shadow: 0px 0px 8px 3px rgba(0,0,0,0.39);">
+                        </p>
+                        <p>Pounds: <span id="outputKilogramsRev" style="font-weight: bold;"></span></p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="parent" style="font-size: 20px;">
+                        <h2>Inches to Centimeters</h2>
+                        <p>Type a value in the Pounds field to convert the value to Kilograms:</p>
+
+                        <p>
+                            <label>Inches</label>
+                            <input id="inputPounds" type="number" placeholder="Pounds" oninput="weightInConverter(this.value)" onchange="weightInConverter(this.value)" class="Dropdown" style="box-shadow: 0px 0px 8px 3px rgba(0,0,0,0.39);">
+                        </p>
+                        <p >Centimeters: <span id="outputInToCm" style="font-weight: bold;"></span></p>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="parent" style="font-size: 20px;">
+                        <h2>Centimeters to Inches</h2>
+                        <p>Type a value in the Kilograms field to convert the value to Pounds:</p>
+
+                        <p>
+                            <label>Centimeters</label>
+                            <input id="inputPounds" type="number" placeholder="Pounds" oninput="weightInConverterRev(this.value)" onchange="weightInConverterRev(this.value)" class="Dropdown" style="box-shadow: 0px 0px 8px 3px rgba(0,0,0,0.39);">
+                        </p>
+                        <p>Inches: <span id="outputCmToInRev" style="font-weight: bold;"></span></p>
+
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-10">
-            <label asp-for="height" class="col-md-2">Height</label>
-            <input asp-for="height" class="form-control" />
-        </div>
-        <div class="form-group">
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-success form-control">Calculate BMI</button>
+    </div>
+     
+
+
+@*
+
+    <div class="parent" style="margin-bottom: 7.5rem;">
+
+        <div class="container">
+            <div class="row">
+                <form class="col " asp-action="KgsConverter" asp-controller="Home" method="post" role="form">
+                    <div class="child" style="text-align: center;">
+                        <div class="col-md-10" style="text-align: center; margin: auto; width: 45%;">
+                            <label asp-for="Kgs" class="col-md-2" style="margin-bottom: 10px;">Kilos</label>
+                            <input asp-for="Kgs" class="form-control" id="txtField" style="margin-bottom: 15px;" />
+                        </div>
+                    <div class="form-group">
+                        <div class="col-md-2" style="text-align: center; margin: auto; width: 45%;">
+                            <button type="submit" class="btn btn-success form-control" id="buttonField">Convert</button>
+                        </div>
+                    </div>
+
+                </form>
             </div>
         </div>
 
-    </form>
+
+*@
 
 
-    <form asp-action="CallBmrAPI" asp-controller="Home" method="post" role="form">
-        <div class="col-md-10">
-            <label asp-for="weight" class="col-md-2">Weight</label>
-            <input asp-for="weight" class="form-control" />
-        </div>
-        <div class="col-md-10">
-            <label asp-for="height" class="col-md-2">Height</label>
-            <input asp-for="height" class="form-control" />
-        </div>
-        <div class="col-md-10">
-            <label asp-for="age" class="col-md-2">Age</label>
-            <input asp-for="age" class="form-control" />
-        </div>
-        <div class="col-md-10">
-            <label asp-for="gender" class="col-md-2">Gender</label>
-            <input asp-for="gender" class="form-control" />
-        </div>
-        <div class="form-group">
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-success form-control">Calculate BMR</button>
+    <div class="parent" style="margin-bottom: 7.5rem;">
+
+        <div class="container">
+            <div class="row">
+                <div class="col" style="border: solid 0px 00FFFFFF; border-radius: 10px; -webkit-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39); -moz-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39); box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39);" ">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <img src="/Images/demoimage.jpg" alt="Fitness BMI" style="margin-top: 15px; margin-bottom: 10px; width: 350px; height: auto; border: solid 0px grey; border-radius: 10px; -webkit-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39); -moz-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39); box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39);" />
+                                <li style="margin-bottom: 10px;">
+                                    <a asp-area="" asp-controller="Home" asp-action="Privacy">More BMI Info</a>
+                                </li>
+                            </div>
+                            <div class="col" style="margin-top: 15px;">
+
+                                <li>
+                                    Body Mass Index (BMI) is a person's weight in pounds divided by the square of height in feet.
+                                </li>
+
+                                <li>
+                                    BMI is a reasonable indicator of body fat for both adults and children. 
+                                </li>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <form class="col " asp-action="CallBmiAPI" asp-controller="Home" method="post" role="form">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <div class="child" style="text-align: center;">
+                        <div class="col-md-10" style="text-align: center; margin: auto; width: 45%;">
+                            <label asp-for="weight" class="col-md-2" style="margin-bottom: 10px;">Weight(lbs)</label>
+                            <input asp-for="weight" class="form-control" id="txtField" style="margin-bottom: 15px;" />
+                            <span asp-validation-for="weight" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-10" style="text-align: center; margin: auto; width: 45%;">
+                            <label asp-for="height" class="col-md-2" style="margin-bottom: 0px;">Height(in)</label>
+                            <input asp-for="height" class="form-control" id="txtField" style="margin-bottom: 15px;" />
+                            <span asp-validation-for="height" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-2" style="text-align: center; margin: auto; width: 45%;">
+                            <button type="submit" class="btn btn-success form-control" id="buttonField">Calculate BMI</button>
+                        </div>
+                    </div>
+
+                </form>
             </div>
         </div>
 
+
+    </div>
+
+
+
+
+
+
+
+    <div class="parent" style="margin-bottom: 7.5rem;">
+
+        <div class="container">
+            <div class="row">
+                <div class="col" style="border: solid 0px 00FFFFFF; border-radius: 10px; -webkit-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39); -moz-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39); box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39);" ">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <img src="/Images/Images/Fit.jpg" alt="Fitness BMI" style=" margin-bottom: 15px; margin-top: 15px; width: 350px; height: auto; border: solid 0px grey; border-radius: 10px; -webkit-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39); -moz-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39); box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39);" />
+                            </div>
+                            <div class="col" style="margin-top: 15px;">
+
+                                <li style="margin-bottom: 5px;">
+                                    Using a mathematical formula, you can determine your BMR.
+                                </li>
+                                
+                                <li>
+                                    Your BMR is the number of calories your organs need to function while you perform no activity whatsoever.
+                                </li>
+                            </div>
+
+                        </div>
+                        <li>
+                            Knowing your basal metabolic rate (BMR) helps you determine the estimated baseline amount of calories your body needs to function and serves as a starting point to determine how many calories you may want to consume based on your goals. This is very helpful with tracking your needed activity levels. <a asp-area="" asp-controller="Home" asp-action="Privacy">More BMR Info</a>
+
+
+                        </li>
+
+                    </div>
+
+                </div>
+                <form class="col" asp-action="CallBmrAPI" asp-controller="Home" method="post" role="form" >
+                    <div class="child" style="text-align: center;">
+                        <div class="col-md-10" style="text-align: center; margin: auto; width: 45%;">
+                            <label asp-for="weight" class="col-md-2" style="margin-bottom: 10px;">Weight(lbs)</label>
+                            <input asp-for="weight" class="form-control" id="txtField" style="margin-bottom: 15px;" />
+                        </div>
+                        <div class="col-md-10" style="text-align: center; margin: auto; width: 45%;">
+                            <label asp-for="height" class="col-md-2" style="margin-bottom: 0px;">Height(in)</label>
+                            <input asp-for="height" class="form-control" id="txtField" style="margin-bottom: 15px;" />
+                            <span asp-validation-for="height" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-10" style="text-align: center; margin: auto; width: 45%;">
+                            <label asp-for="age" class="col-md-2" style="margin-bottom: 10px;">Age</label>
+                            <input asp-for="age" class="form-control" id="txtField" style="margin-bottom: 15px;" />
+                        </div>
+                        <div class="col-md-10" style="text-align: center; margin: auto; width: 45%;">
+                            <label asp-for="gender" class="col-md-2" style="margin-bottom: 10px;">Gender</label>
+                        </div>
+                        <fieldset>
+                            <select class="Dropdown" id="txtField" name="Gender" style="text-align: center; margin: auto; width: 45%; padding-left: 10px;">
+
+                                <option value="male" style="text-align: left;">male</option>
+
+                                <option value="female" style="text-align: left;">female</option>
+
+                            </select>
+                        </fieldset>
+
+                        <div class="form-group">
+                            <div class="col-md-2" style="text-align: center; margin: auto; width: 45%;">
+                                <button type="submit" class="btn btn-success form-control" id="buttonField">Calculate BMR</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+    <div class="parent" style="margin-bottom: 7.5rem;">
+
+        <div class="container">
+            <div class="row">
+                <div class="col" style="border: solid 0px 00FFFFFF; border-radius: 10px; -webkit-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39); -moz-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39); box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39); ">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <img src="/Images/fatter.jpg" alt="Fitness BMI" style=" margin-bottom: 15px; margin-top: 15px; width: 350px; height: auto; border: solid 0px grey; border-radius: 10px; -webkit-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39); -moz-box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39); box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.39);" />
+                            </div>
+                            <div class="col" style="">
+
+                                <li style="margin-bottom: 5px;">
+                                    Your body fat percentage (BFP) is the percentage of your body fat in relation to your overall weight.
+                                </li>
+
+                            </div>
+
+                        </div>
+                        <li>
+                            If you weigh 200lbs and your body fat percentage is 30%, this means that your body fat weight (BFW) is 60lbs.  The other 140lbs is your lean body mass (LBM).
+
+
+                        </li>
+                        <li style="margin-bottom: 10px;">
+                            Both men and women carry different amounts of body fat percentage. A super ripped male bodybuilder who is minimizing body fat percentage could have a percentage down as low as 3-4%, while a super ripped female bodybuilder who is minimizing body fat percentage would only get as low as 8-9%. <a asp-area="" asp-controller="Home" asp-action="Privacy">More BFP Info</a>
+                        </li>
+
+                    </div>
+
+                </div>
+                <form class="col" asp-action="CallBfpAPI" asp-controller="Home" method="post" role="form">
+                    <div class="child" style="text-align: center;">
+                        <div class="col-md-10" style="text-align: center; margin: auto; width: 45%;">
+                            <label asp-for="weight" class="col-md-2" style="margin-bottom: 10px;">Weight(lbs)</label>
+                            <input asp-for="weight" class="form-control" id="txtField" style="margin-bottom: 15px;" />
+                        </div>
+                        <div class="col-md-10" style="text-align: center; margin: auto; width: 45%;">
+                            <label asp-for="height" class="col-md-2" style="margin-bottom: 0px;">Height(in)</label>
+                            <input asp-for="height" class="form-control" id="txtField" style="margin-bottom: 15px;" />
+                            <span asp-validation-for="height" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-10" style="text-align: center; margin: auto; width: 45%;">
+                            <label asp-for="age" class="col-md-2" style="margin-bottom: 10px;">Age</label>
+                            <input asp-for="age" class="form-control" id="txtField" style="margin-bottom: 15px;" />
+                        </div>
+                        <div class="col-md-10" style="text-align: center; margin: auto; width: 45%;">
+                            <label asp-for="gender" class="col-md-2" style="margin-bottom: 10px;">Gender</label>
+                        </div>
+                        <fieldset>
+                            <select class="Dropdown" id="txtField" name="Gender" style="text-align: center; margin: auto; width: 45%; padding-left: 10px;">
+
+                                <option value="male" style="text-align: left;">male</option>
+
+                                <option value="female" style="text-align: left;">female</option>
+
+                            </select>
+                        </fieldset>
+
+                        <div class="form-group">
+                            <div class="col-md-2" style="text-align: center; margin: auto; width: 45%;">
+                                <button type="submit" class="btn btn-success form-control" id="buttonField">Calculate BFP</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+    @*
+
+    <div>
+    <form asp-action="CallBfpAPI" asp-controller="Home" method="post" role="form">
+    <div class="col-md-10">
+    <label asp-for="weight" class="col-md-2">Weight</label>
+    <input asp-for="weight" class="form-control" />
+    </div>
+    <div class="col-md-10">
+    <label asp-for="height" class="col-md-2">Height</label>
+    <input asp-for="height" class="form-control" />
+    </div>
+    <div class="col-md-10">
+    <label asp-for="age" class="col-md-2">Age</label>
+    <input asp-for="age" class="form-control" />
+    </div>
+    <div class="col-md-10">
+    <label asp-for="gender" class="col-md-2">Gender</label>
+    <input asp-for="gender" class="form-control" />
+    </div>
+    <div class="form-group">
+    <div class="col-md-2">
+    <button type="submit" class="btn btn-success form-control">Calculate BFP</button>
+    </div>
+    </div>
+
     </form>
+    </div>
+
+    *@
+
+    @*<form asp-controller="CallBmiAPI" asp-action="Home" method="post" role="form">
+
+    <div class="form-group">
+    <label asp-for="Email" class="col-md-2"></label>
+    <div class="col-md-10">
+    <input asp-for="Email" class="form-control" />
+    <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    </div>
+
+    <div class="form-group">
+    <div class="col-md-2">
+    <button type="submit" class="btn btn-success form-control">Submit</button>
+    </div>
+    </div>
+    </form>*@
 </div>
-
-
-<form asp-action="CallBfpAPI" asp-controller="Home" method="post" role="form">
-    <div class="col-md-10">
-        <label asp-for="weight" class="col-md-2">Weight</label>
-        <input asp-for="weight" class="form-control" />
-    </div>
-    <div class="col-md-10">
-        <label asp-for="height" class="col-md-2">Height</label>
-        <input asp-for="height" class="form-control" />
-    </div>
-    <div class="col-md-10">
-        <label asp-for="age" class="col-md-2">Age</label>
-        <input asp-for="age" class="form-control" />
-    </div>
-    <div class="col-md-10">
-        <label asp-for="gender" class="col-md-2">Gender</label>
-        <input asp-for="gender" class="form-control" />
-    </div>
-    <div class="form-group">
-        <div class="col-md-2">
-            <button type="submit" class="btn btn-success form-control">Calculate BFP</button>
-        </div>
-    </div>
-
-</form>
-</div>
-
-
-
-@*<form asp-controller="CallBmiAPI" asp-action="Home" method="post" role="form">
-    
-    <div class="form-group">
-        <label asp-for="Email" class="col-md-2"></label>
-        <div class="col-md-10">
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-2">
-            <button type="submit" class="btn btn-success form-control">Submit</button>
-        </div>
-    </div>
-</form>*@

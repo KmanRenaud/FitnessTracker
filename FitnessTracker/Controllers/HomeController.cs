@@ -32,10 +32,24 @@ namespace FitnessTracker.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        
+
         public IActionResult CallBmiAPI(Root root)
         {
-            var client = new RestClient($"https://mega-fitness-calculator1.p.rapidapi.com/bmi?weight={root.weight}&height={root.height}");
+
+            if (root.weight < 1)
+            {
+                root.weight = 1;
+            }
+            if (root.height < 1)
+            {
+                root.height = 1;
+            }
+            if (root.age < 1)
+            {
+                root.age = 1;
+            }
+
+            var client = new RestClient($"https://mega-fitness-calculator1.p.rapidapi.com/bmi?weight={InfoBMI.ConvertWeightToKg(root.weight)}&height={InfoBMI.ConvertHeightToCm(root.height)}");
             var request = new RestRequest();
             request.AddHeader("X-RapidAPI-Key", "cc450cdb9amsh0b1d69419475dd9p1b578ejsnc1c449292f91");
             request.AddHeader("X-RapidAPI-Host", "mega-fitness-calculator1.p.rapidapi.com");
@@ -57,9 +71,37 @@ namespace FitnessTracker.Controllers
 
             return View(updConnecter);
         }
+
+        //public IActionResult ConvertKgLbs(Root root)
+        //{
+
+        //    double kilos = Convert.ToDouble(root.Kgs);
+
+        //    kilos *= 2.205;
+
+        //    KgsToPounds finalCon = new KgsToPounds();
+
+        //    finalCon.KgsAreLbs = kilos;
+
+        //    return View(finalCon);
+
+        //}
         public IActionResult CallBmrAPI(Root root)
         {
-            var client = new RestClient($"https://mega-fitness-calculator1.p.rapidapi.com/bmr?weight={root.weight}&height={root.height}&age={root.age}&gender={root.gender}");
+            if (root.weight < 1)
+            {
+                root.weight = 1;
+            }
+            if (root.height < 1)
+            {
+                root.height = 1;
+            }
+            if (root.age < 1)
+            {
+                root.age = 1;
+            }
+
+            var client = new RestClient($"https://mega-fitness-calculator1.p.rapidapi.com/bmr?weight={InfoBMI.ConvertWeightToKg(root.weight)}&height={InfoBMI.ConvertHeightToCm(root.height)}&age={root.age}&gender={root.gender}");
             var request = new RestRequest();
             request.AddHeader("X-RapidAPI-Key", "cc450cdb9amsh0b1d69419475dd9p1b578ejsnc1c449292f91");
             request.AddHeader("X-RapidAPI-Host", "mega-fitness-calculator1.p.rapidapi.com");
@@ -74,15 +116,26 @@ namespace FitnessTracker.Controllers
             infoBMR.gender = (string)formattedResponse["gender"];
 
 
-
             var updConnecter = infoBMR;
 
             return View(updConnecter);
         }
         public IActionResult CallBfpAPI(Root root)
         {
+            if (root.weight < 1)
+            {
+                root.weight = 1;
+            }
+            if (root.height < 1)
+            {
+                root.height = 1;
+            }
+            if (root.age < 1)
+            {
+                root.age = 1;
+            }
 
-            var client = new RestClient($"https://mega-fitness-calculator1.p.rapidapi.com/bfp?weight={root.weight}&height={root.height}&age={root.age}&gender={root.gender}");
+            var client = new RestClient($"https://mega-fitness-calculator1.p.rapidapi.com/bfp?weight={InfoBMI.ConvertWeightToKg(root.weight)}&height={InfoBMI.ConvertHeightToCm(root.height)}&age={root.age}&gender={root.gender}");
             var request = new RestRequest();
             request.AddHeader("X-RapidAPI-Key", "cc450cdb9amsh0b1d69419475dd9p1b578ejsnc1c449292f91");
             request.AddHeader("X-RapidAPI-Host", "mega-fitness-calculator1.p.rapidapi.com");
@@ -95,9 +148,9 @@ namespace FitnessTracker.Controllers
             infoBFP.bfp = (double)formattedResponse["bfp"];
 
             infoBFP.gender = (string)formattedResponse["gender"];
-            
+
             infoBFP.fat_mass = (double)formattedResponse["fat_mass"];
-            
+
             infoBFP.lean_mass = (double)formattedResponse["lean_mass"];
 
             infoBFP.description = (string)formattedResponse["description"];
