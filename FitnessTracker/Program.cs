@@ -1,7 +1,19 @@
+using Newtonsoft.Json.Linq;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<string>((s) =>
+{
+    var key = File.ReadAllText("appsettings.json");
+    string conn = JObject.Parse(key).GetValue("X-RapidAPI-Key").ToString();
+    return conn;
+});
+
 
 var app = builder.Build();
 

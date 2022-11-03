@@ -11,9 +11,13 @@ namespace FitnessTracker.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly string APIKey;
+
+
+        public HomeController(ILogger<HomeController> logger, string aPIKey)
         {
             _logger = logger;
+            APIKey = aPIKey;
         }
 
         public IActionResult Index()
@@ -51,7 +55,7 @@ namespace FitnessTracker.Controllers
 
             var client = new RestClient($"https://mega-fitness-calculator1.p.rapidapi.com/bmi?weight={InfoBMI.ConvertWeightToKg(root.weight)}&height={InfoBMI.ConvertHeightToCm(root.height)}");
             var request = new RestRequest();
-            request.AddHeader("X-RapidAPI-Key", "cc450cdb9amsh0b1d69419475dd9p1b578ejsnc1c449292f91");
+            request.AddHeader("X-RapidAPI-Key", APIKey);
             request.AddHeader("X-RapidAPI-Host", "mega-fitness-calculator1.p.rapidapi.com");
             var response = client.Execute(request).Content;
 
@@ -103,7 +107,7 @@ namespace FitnessTracker.Controllers
 
             var client = new RestClient($"https://mega-fitness-calculator1.p.rapidapi.com/bmr?weight={InfoBMI.ConvertWeightToKg(root.weight)}&height={InfoBMI.ConvertHeightToCm(root.height)}&age={root.age}&gender={root.gender}");
             var request = new RestRequest();
-            request.AddHeader("X-RapidAPI-Key", "cc450cdb9amsh0b1d69419475dd9p1b578ejsnc1c449292f91");
+            request.AddHeader("X-RapidAPI-Key", APIKey);
             request.AddHeader("X-RapidAPI-Host", "mega-fitness-calculator1.p.rapidapi.com");
             var response = client.Execute(request).Content;
 
@@ -137,7 +141,7 @@ namespace FitnessTracker.Controllers
 
             var client = new RestClient($"https://mega-fitness-calculator1.p.rapidapi.com/bfp?weight={InfoBMI.ConvertWeightToKg(root.weight)}&height={InfoBMI.ConvertHeightToCm(root.height)}&age={root.age}&gender={root.gender}");
             var request = new RestRequest();
-            request.AddHeader("X-RapidAPI-Key", "cc450cdb9amsh0b1d69419475dd9p1b578ejsnc1c449292f91");
+            request.AddHeader("X-RapidAPI-Key", APIKey);
             request.AddHeader("X-RapidAPI-Host", "mega-fitness-calculator1.p.rapidapi.com");
             var response = client.Execute(request).Content;
 
